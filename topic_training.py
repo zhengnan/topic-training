@@ -35,21 +35,21 @@ if __name__ == "__main__":
             command_data_path = data_path
         except:
             pass
-    elif "-r" in command:
+    if "-r" in command:
         try:
             index = command.index("-r")
             root_path = command[index+1]
             command_root_path = root_path
         except:
             pass
-    elif "-w" in command:
+    if "-w" in command:
         try:
             index = command.index("-w")
             works = int(command[index+1])
             command_worker_number = works
         except:
             pass
-    elif "-v" in command:
+    if "-v" in command:
         try:
             index = command.index("-v")
             vectors = int(command[index+1])

@@ -14,8 +14,8 @@ class GetTrainingData(object):
 
     def __init__(self, article_folder_path = ARTICLE_CONTENT_FOLDER_PATH, valid_number = 50):
         self.article_folder_path = article_folder_path
-        self.article_training_data = self.load_data()
         self.valid_number = valid_number
+        self.article_training_data = self.load_data()
 
     def convert_to_utf8(self, data, ignore_dicts=False):
         # if this is a unicode string, return its string representation

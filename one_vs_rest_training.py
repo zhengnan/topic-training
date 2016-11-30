@@ -33,11 +33,16 @@ class OneVsRestTraining(object):
     def generate_origin_training_data(self):
         x_train, x_test, y_train, y_test = train_test_split(self.data, self.topics, test_size = 0.2, random_state = 42)
         if flag == 1:
-            person = GetTrainingData(article_folder_path = ew_file_path, valid_number = 0)
+            print("Flag is open! Add files in %s" % (new_file_path))
+            print("Before add new files!")
+            print("Train data count: %d" % len(x_train))
+            print("Test data count: %d" % len(x_test))
+            print("Train target count: %d" % len(y_train))
+            print("Test target count: %d" % len(y_test))
+            person = GetTrainingData(article_folder_path = new_file_path, valid_number = 0)
             new_x_train, new_y_train, new_target = person.get_title_and_content()
             x_train.extend(new_x_train)
             y_train.extend(new_y_train)
-            print("Flag is open! Add files in %s" % (new_file_path))
             print("Add new article's number %s." % (len(new_x_train)))
         y_test_new = []
         for text in x_test:
@@ -54,7 +59,7 @@ class OneVsRestTraining(object):
             print("Train data count: %d" % len(x_train))
             print("Test data count: %d" % len(x_test))
             print("Train target count: %d" % len(y_train))
-            print("Test target count: %d" % len(y_test)
+            print("Test target count: %d" % len(y_test))
         except:
             traceback.print_exc()
         return x_train, x_test, y_train, y_test

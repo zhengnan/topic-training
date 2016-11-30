@@ -11,6 +11,9 @@ class EvaluationIndicator(object):
         self.y_test = y_test
         pass
 
+    def sigmoid(self, x):
+        return 1 / (1 + math.exp(-x))
+
     def get_topN_pred(self, n):
         length = len(self.y_test)
         pred = []
@@ -38,10 +41,33 @@ class EvaluationIndicator(object):
         print ("precision: %0.4f" % (tp / (tp + fp)))
         print ("recall: %0.4f" % (tp / (tp + fn)))
 
-    def get_threshold_pr(self, threshold):
-        pass
+    def get_threshold_pr(self, step = 0.01):
+        length = len(self.y_test)
+        print "Threshold pr."
+        for threshold in np.arange(0.4, 0.5, 0.01):
+            pred = []
+            for prob in self.probs:
+                p = []
+                for index in xrange(0, len(prob)):
+                    if self.sigmoid(prob[index]) > threshold:
+                        p.append(self.clf.classes_[index])
+                pred.append(p)
+
+            tp = 0.
+            fp = 0.
+            fn = 0.
+
+            for i in xrange(0, length):
+                if any(x in pred[i] for x in self.y_test[i]):
+                    tp += 1
+                else:
+                    fn += 1
+                    if pred[i]:
+                        fp += 1
+            print "%0.4f\t%0.4f\t%0.4f" % (threshold, (tp / (tp + fp)), (tp / (tp + fn)))
 
     def get_auc(self):
+        print "AUC number."
         length = len(self.y_test)
         pred = []
         for prob in self.probs:
