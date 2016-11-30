@@ -1,6 +1,7 @@
 #
 #
 #
+import math
 import numpy as np
 from sklearn import metrics
 
@@ -65,13 +66,24 @@ class EvaluationIndicator(object):
                     fn += 1
                     if pred[i]:
                         fp += 1
+            print "threshold\tprecision\trecall"
             print "%0.4f\t%0.4f\t%0.4f" % (threshold, (tp / (tp + fp)), (tp / (tp + fn)))
 
     def get_auc(self):
         print "AUC number."
-        length = len(self.y_test)
-        fpr, tpr, thresholds = metrics.roc_curve(self.y_test, self.probs, pos_label = length)
-        auc = metrics.auc(fpr, tpr)
+        pred = []
+        y_true = []
+        y_score = []
+        for prob in self.probs:
+            for index in xrange(0, len(prob)):
+                p.append(self.clf.classes_[index])
+            pred.append(p)
 
-        print "AUC: %0.4f" % auc
+        for i in xrange(0, len(self.y_test)):
+            if any(x in pred[i] for x in self.y_test[i]):
+                y_true.append(x)
+                y_score.append(self.sigmoid(self.probs[i][pred[i].index(x)]))
+        auc_score = metrics.roc_auc_score(y_true, y_score)
+        
+        print "AUC: %0.4f" % auc_score
 
