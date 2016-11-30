@@ -2,6 +2,7 @@
 #
 #
 import numpy as np
+from sklearn import metrics
 
 class EvaluationIndicator(object):
     
@@ -69,31 +70,8 @@ class EvaluationIndicator(object):
     def get_auc(self):
         print "AUC number."
         length = len(self.y_test)
-        pred = []
-        for prob in self.probs:
-            p = []
-            for index in xrange(0, len(prob)):
-                p.append((self.clf.classes_[index], prob[index]))
-            pred.append(p)
-        t_number = 0.
-        f_number = 0.
-        p_number = 0.
-        t_list = []
-        f_list = []
-        for i in xrange(0, length):
-            for item in pred[i]:
-                if item[0] in self.y_test[i]:
-                    t_number += 1
-                    t_list.append(item[1])
-                else:
-                    f_number += 1
-                    f_list.append(item[1])
+        fpr, tpr, thresholds = metrics.roc_curve(self.y_test, self.probs, pos_label = length)
+        auc = metrics.auc(fpr, tpr)
 
-        for x in t_list:
-            for y in f_list:
-                if x > y:
-                    p_number += 1
-
-        print "t_number:%s, f_number:%s, p_number:%s" % (t_number, f_number, p_number)
-        print "AUC: %0.4f" % (p_number / (t_number * f_number))
+        print "AUC: %0.4f" % auc
 
