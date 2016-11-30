@@ -12,9 +12,10 @@ ARTICLE_CONTENT_FOLDER_PATH = "/mnt/result-json-100"
 
 class GetTrainingData(object):
 
-    def __init__(self, article_folder_path = ARTICLE_CONTENT_FOLDER_PATH):
+    def __init__(self, article_folder_path = ARTICLE_CONTENT_FOLDER_PATH, valid_number = 50):
         self.article_folder_path = article_folder_path
         self.article_training_data = self.load_data()
+        self.valid_number = valid_number
 
     def convert_to_utf8(self, data, ignore_dicts=False):
         # if this is a unicode string, return its string representation
@@ -55,7 +56,7 @@ class GetTrainingData(object):
                                             article_data_item = (article_item["title"], article_item["content"], file_name, self.convert_to_utf8(article_item["tag"]))
                                             article_result.append(article_data_item)
                                 w.write('{0}\t{1}\t{2}\n'.format(file_name, len(j["article"]), valid_article_count_per_topic))
-                                if valid_article_count_per_topic > 50:
+                                if valid_article_count_per_topic > self.valid_number:
                                     result.extend(article_result)
                                     valid_topic_count += 1
                                 else:
