@@ -77,7 +77,8 @@ class EvaluationIndicator(object):
         y_score = []
         for prob in self.probs:
             p = []
-            for index in xrange(0, len(prob)):
+            best_n = np.argsort(prob)[-1:]
+            for index in best_n:
                 p.append(self.clf.classes_[index])
             pred.append(p)
 
