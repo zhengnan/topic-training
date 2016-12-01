@@ -46,11 +46,11 @@ class EvaluationIndicator(object):
     def get_threshold_pr(self, step = 0.01):
         length = len(self.y_test)
         print "Threshold pr."
-        for threshold in np.arange(0.4, 0.5, 0.01):
+        for threshold in np.arange(0.4, 0.6, step):
             pred = []
             for prob in self.probs:
                 p = []
-                best_n = np.argsort(prob)[-10:]
+                best_n = np.argsort(prob)[-1:]
                 for index in best_n:
                     if self.sigmoid(prob[index]) > threshold:
                         p.append(self.clf.classes_[index])
