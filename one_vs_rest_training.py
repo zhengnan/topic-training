@@ -73,7 +73,11 @@ class OneVsRestTraining(object):
     def clean_and_vectorizer_training_data(self, features_number = 10000):
         vectorizer = HashingVectorizer(stop_words = 'english', non_negative = False, n_features = features_number)
         x_train = vectorizer.transform(self.x_train)
-        x_test = vectorizer.transform(self.x_test)
+        x_test = None
+        if self.all_data:
+            print "Empty x_test!"
+        else:
+            x_test = vectorizer.transform(self.x_test)
         print("Finish vectorizer!")
         joblib.dump(vectorizer, self.base_path + "vectorizer.pkl")
         try:

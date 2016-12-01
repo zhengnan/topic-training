@@ -88,7 +88,7 @@ if __name__ == "__main__":
         print "All data training model!"
     else:
         print "80% data training model!"
-    clf, x_test, y_test = start_trainging_process(data_path = command_data_path, root_path = command_root_path, works = command_worker_number, dimension = command_vector_dimension)
+    clf, x_test, y_test = start_trainging_process(data_path = command_data_path, root_path = command_root_path, works = command_worker_number, dimension = command_vector_dimension, all_data = command_all_data)
     if command_all_data:
         test_data_processor = GetTrainingData(test_data_path, 0)
         new_test_x, new_test_y, target = test_data_processor.get_title_and_content()

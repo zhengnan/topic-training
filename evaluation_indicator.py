@@ -50,7 +50,8 @@ class EvaluationIndicator(object):
             pred = []
             for prob in self.probs:
                 p = []
-                for index in xrange(0, len(prob)):
+                best_n = np.argsort(prob)[-10:]
+                for index in best_n:
                     if self.sigmoid(prob[index]) > threshold:
                         p.append(self.clf.classes_[index])
                 pred.append(p)
@@ -66,7 +67,7 @@ class EvaluationIndicator(object):
                     fn += 1
                     if pred[i]:
                         fp += 1
-            print "threshold\tprecision\trecall"
+            print "threshold  precision  recall"
             print "%0.4f\t%0.4f\t%0.4f" % (threshold, (tp / (tp + fp)), (tp / (tp + fn)))
 
     def get_auc(self):
