@@ -75,13 +75,17 @@ class EvaluationIndicator(object):
         y_true = []
         y_score = []
         for prob in self.probs:
+            p = []
             for index in xrange(0, len(prob)):
                 p.append(self.clf.classes_[index])
             pred.append(p)
 
         for i in xrange(0, len(self.y_test)):
-            if any(x in pred[i] for x in self.y_test[i]):
-                y_true.append(x)
+            for x in pred[i]:
+                if x in self.y_test[i]:
+                    y_true.append(1)
+                else:
+                    y_true.append(0)
                 y_score.append(self.sigmoid(self.probs[i][pred[i].index(x)]))
         auc_score = metrics.roc_auc_score(y_true, y_score)
         

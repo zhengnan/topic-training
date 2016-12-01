@@ -23,15 +23,21 @@ flag = 1
 
 class OneVsRestTraining(object):
     
-    def __init__(self, data, topics, target, root_path = base_path):
+    def __init__(self, data, topics, target, root_path = base_path, all_data = False):
         self.data = data
         self.topics = topics
         self.target = target
         self.base_path = root_path
+        self.all_data = all_data
         self.x_train, self.x_test, self.y_train, self.y_test = self.generate_origin_training_data()
     
     def generate_origin_training_data(self):
-        x_train, x_test, y_train, y_test = train_test_split(self.data, self.topics, test_size = 0.2, random_state = 42)
+        x_train = self.data
+        y_train = self.topics
+        x_test = []
+        y_test = []
+        if self.all_data == False:
+            x_train, x_test, y_train, y_test = train_test_split(self.data, self.topics, test_size = 0.2, random_state = 42)
         if flag == 1:
             print("Flag is open! Add files in %s" % (new_file_path))
             print("Before add new files!")
