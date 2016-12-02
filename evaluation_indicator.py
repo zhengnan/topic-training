@@ -46,6 +46,7 @@ class EvaluationIndicator(object):
     def get_threshold_pr(self, step = 0.01):
         length = len(self.y_test)
         print "Threshold pr."
+        print "threshold  precision  recall"
         for threshold in np.arange(0.4, 0.6, step):
             pred = []
             for prob in self.probs:
@@ -67,7 +68,6 @@ class EvaluationIndicator(object):
                     fn += 1
                     if pred[i]:
                         fp += 1
-            print "threshold  precision  recall"
             print "%0.4f\t%0.4f\t%0.4f" % (threshold, (tp / (tp + fp)), (tp / (tp + fn)))
 
     def get_auc(self):

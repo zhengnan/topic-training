@@ -17,6 +17,8 @@ from evaluation_indicator import EvaluationIndicator
 from sklearn.feature_extraction.text import HashingVectorizer
 from sklearn.externals import joblib
 
+os.environ['JOBLIB_TEMP_FOLDER'] = '/mnt/'
+
 def start_trainging_process(data_path, root_path, works, dimension, all_data):
     training_data_processor = GetTrainingData(data_path)
     data, topics, target = training_data_processor.get_title_and_content()
